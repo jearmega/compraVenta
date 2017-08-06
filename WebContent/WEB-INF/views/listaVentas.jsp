@@ -25,8 +25,8 @@
           <th>Articulo</th>
           <th>Cantidad</th>
           <th>Costo</th>
-          <th>Edit</th>
-          <th>Delete</th>
+          <th>Editar</th>
+          <th>Borrar</th>
        </tr>
        <c:forEach items="${productList}" var="product" >
           <tr>
@@ -35,10 +35,10 @@
              <td>${product.cantidad}</td>
              <td>${product.costo}</td>
              <td>
-                <a href="editarVenta?idVenta=${product.idVenta}">Edit</a>
+                <a href="editarVenta?idVenta=${product.idVenta}">Editar</a>
              </td>
              <td>
-                <a href="borrarVenta?idVenta=${product.idVenta}">Delete</a>
+                <a href="borrarVenta?idVenta=${product.idVenta}">Borrar</a>
              </td>
           </tr>
        </c:forEach>
