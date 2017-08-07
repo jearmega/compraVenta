@@ -234,7 +234,7 @@ public class DBUtils {
  
       pstm.executeUpdate();
       
-      sql = "Update articulos set cantidad=cantidad+?,costo=? where codigo=?";
+      sql = "Update articulos set cantidad=cantidad-?,costo=? where codigo=?";
       
       pstm = conn.prepareStatement(sql);
  
