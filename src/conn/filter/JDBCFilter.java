@@ -78,11 +78,7 @@ public class JDBCFilter implements Filter {
  
  
        //
-       // Only open connections for the special requests need
-       // connection. (For example, the path to the servlet, JSP, ..)
-       //
-       // Avoid open connection for commons request
-       // (for example: image, css, javascript,... )
+       // Abrir conexión para solicitudes especiales
        //
        if (this.needJDBC(req)) {
  
@@ -90,17 +86,16 @@ public class JDBCFilter implements Filter {
  
            Connection conn = null;
            try {
-               // Create connection
+               // Crear connection
                conn = ConnectionUtils.getConnection();
  
                // Set Auto commit to false
                conn.setAutoCommit(false);
  
-                // Store connection in attribute of request.
+                // Almacenar conexión en atributo de solicitud
                MyUtils.storeConnection(request, conn);
  
-               // Allow request to go forward
-               // (Go to the next filter or target)
+               // Enviar respuesta
                chain.doFilter(request, response);
  
                 // Commit change.
@@ -114,12 +109,10 @@ public class JDBCFilter implements Filter {
            }
        }
  
-       // With commons requests (images, css, html, ..)
-       // No need to open the connection.        
+           
        else {
  
-           // Allow request to go forward
-           // (Go to the next filter or target)            
+               
            chain.doFilter(request, response);
        }
  
