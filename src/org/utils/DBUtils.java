@@ -16,7 +16,7 @@ public class DBUtils {
  
   public static CuentaUsuario findUser(Connection conn, String nombre, String clave) throws SQLException {
  
-      String sql = "Select a.nombre, a.clave, a.sexo from usuarios a "
+      String sql = "Select a.nombre, a.clave from usuarios a "
               + " where a.nombre = ? and a.clave= ?";
  
       PreparedStatement pstm = conn.prepareStatement(sql);
@@ -27,11 +27,9 @@ public class DBUtils {
       ResultSet rs = pstm.executeQuery();
  
       if (rs.next()) {
-          String sexo = rs.getString("sexo");
           CuentaUsuario user = new CuentaUsuario();
           user.setNombre(nombre);
           user.setClave(clave);
-          user.setSexo(sexo);
           return user;
       }
       return null;
@@ -39,7 +37,7 @@ public class DBUtils {
  
   public static CuentaUsuario findUser(Connection conn, String nombre) throws SQLException {
  
-      String sql = "Select a.nombre, a.clave, a.sexo from usuarios a " + " where a.nombre = ? ";
+      String sql = "Select a.nombre, a.clave from usuarios a " + " where a.nombre = ? ";
  
       PreparedStatement pstm = conn.prepareStatement(sql);
       pstm.setString(1, nombre);
@@ -48,11 +46,9 @@ public class DBUtils {
  
       if (rs.next()) {
           String clave = rs.getString("clave");
-          String sexo = rs.getString("sexo");
           CuentaUsuario user = new CuentaUsuario();
           user.setNombre(nombre);
           user.setClave(clave);
-          user.setSexo(sexo);
           return user;
       }
       return null;
@@ -145,6 +141,16 @@ public class DBUtils {
       pstm.setFloat(4, product.getCosto());
  
       pstm.executeUpdate();
+      
+      sql = "Update articulos set cantidad=cantidad+?,costo=? where codigo=?";
+      
+      pstm = conn.prepareStatement(sql);
+ 
+      pstm.setFloat(1, product.getCantidad());   
+      pstm.setFloat(2, product.getCosto());
+      pstm.setString(3, product.getCodigo());
+      
+      pstm.executeUpdate();
   }
   
   public static List<Compras> queryCompras(Connection conn) throws SQLException {
@@ -226,6 +232,16 @@ public class DBUtils {
       pstm.setFloat(2, product.getCantidad());
       pstm.setFloat(3, product.getCosto());
  
+      pstm.executeUpdate();
+      
+      sql = "Update articulos set cantidad=cantidad+?,costo=? where codigo=?";
+      
+      pstm = conn.prepareStatement(sql);
+ 
+      pstm.setFloat(1, product.getCantidad());   
+      pstm.setFloat(2, product.getCosto());
+      pstm.setString(3, product.getCodigo());
+      
       pstm.executeUpdate();
   }
   
